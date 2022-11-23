@@ -5,7 +5,7 @@ const { createUser, createPrivateRoom, getPrivateRoomId } = require('./utils');
 /** Creating demo data */
 const demoPassword = 'password123';
 
-const demoUsers = ["Pablo", "Joe", "Mary", 'Alex'];
+const demoUsers = ["Maninder", "Akash", "Ankit", 'Saif'];
 
 const greetings = ["Hello", "Hi", "Yo", "Hola"];
 
