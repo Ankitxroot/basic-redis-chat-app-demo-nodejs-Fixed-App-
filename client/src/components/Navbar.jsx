@@ -17,7 +17,7 @@ const Navbar = () => {
   }, []);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white">
-      <span className="navbar-brand">Redis chat demo</span>
+      <span className="navbar-brand">SRE Redis chat demo (Issue App)</span>
       {links !== null ? (
         <span className="navbar-text">
           {links.github && <GithubIcon link={links.github} />}
