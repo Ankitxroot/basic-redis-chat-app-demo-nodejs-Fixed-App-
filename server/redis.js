@@ -25,7 +25,27 @@ const auth = (client) => new Promise((a, b) => {
 });
 
 /** @type {import('redis').RedisClient} */
-const client = redis.createClient(+port, host);
+//const client = redis.createClient(+port, host);
+
+const client = redis.createClient(+port, host, {
+   retry_strategy: function(options) {
+      if (options.error && options.error.code === "ECONNREFUSED" || "ETIMEDOUT" || "CONNECTION_BROKEN") {
+         // If redis refuses the connection or is not able to connect
+         //return new Error("The server refused the connection");
+         return Math.min(options.attempt * 100, 3000);
+      }
+      if (options.total_retry_time > 1000 * 60 * 60) {
+         // End reconnection after the specified time limit
+         return new Error("Retry time exhausted");
+      }
+      if (options.attempt > 10) {
+         // End reconnecting with built in error
+         return undefined;
+      }
+      // reconnect after
+      return Math.min(options.attempt * 100, 3000);
+   },
+});
 
 /** @type {import('redis').RedisClient} */
 const sub = redis.createClient(+port, host, password === null ? undefined : {
